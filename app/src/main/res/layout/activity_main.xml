@@ -38,11 +38,12 @@
         android:id="@+id/ImageView"
         android:layout_width="214dp"
         android:layout_height="214dp"
+        android:contentDescription="@string/Imageview"
+        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/CameraButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Title"
-        app:srcCompat="@drawable/ic_launcher_foreground"
-        android:contentDescription="@string/Imageview" />
+        app:srcCompat="@drawable/ic_launcher_foreground" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

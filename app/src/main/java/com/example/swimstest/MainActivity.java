@@ -31,8 +31,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
 
+    private ZXingScannerView mScannerView;
     public static final int CAMERA_PERM_CODE = 101;
     public static final int CAMERA_REQUEST_CODE = 102;  //camera request code
     Button camBtn;
@@ -130,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
             }
             //Continue only if the File was successfully created
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this, "com.example.android.FileProvider", photoFile);  //using file provider create URI
+                Uri photoURI = FileProvider.getUriForFile(this, "com.example.android.fileProvider", photoFile);  //using file provider create URI
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);  //can add extra input
                 startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);  //restarting the activity
             }
