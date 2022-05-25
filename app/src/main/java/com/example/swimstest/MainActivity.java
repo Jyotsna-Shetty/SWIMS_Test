@@ -15,6 +15,8 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -24,21 +26,33 @@ import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.mlkit.vision.barcode.BarcodeScanner;
+import com.google.mlkit.vision.barcode.BarcodeScannerOptions;
+import com.google.mlkit.vision.barcode.BarcodeScanning;
+import com.google.mlkit.vision.barcode.common.Barcode;
+import com.google.mlkit.vision.common.InputImage;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
+public class MainActivity extends AppCompatActivity{
 
-    private ZXingScannerView mScannerView;
     public static final int CAMERA_PERM_CODE = 101;
     public static final int CAMERA_REQUEST_CODE = 102;  //camera request code
     Button camBtn;
     String currentPhotoPath;
     ImageView selectedImage;
+    Bitmap bitmap;
+    TextView scannedText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
 
         camBtn =findViewById(R.id.CameraButton);
         selectedImage = findViewById(R.id.ImageView);
+        scannedText = findViewById(R.id.ScannedText);
 
         camBtn.setOnClickListener(view -> {
             askCameraPermissions();
@@ -93,8 +108,10 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
                 Uri contentUri = Uri.fromFile(newfile);
                 mediaScanIntent.setData(contentUri);
                 sendBroadcast(mediaScanIntent);
-                Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath);
+                bitmap = BitmapFactory.decodeFile(currentPhotoPath);
                 selectedImage.setImageBitmap(bitmap);
+                InputImage image = InputImage.fromBitmap(bitmap, 0);
+                scanBarcodes(image);
             }
         }
     }
@@ -136,5 +153,40 @@ public class MainActivity extends AppCompatActivity implements ZXingScannerView.
                 startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);  //restarting the activity
             }
         }
+    }
+
+    private void scanBarcodes(InputImage image) {
+        // [START set_detector_options]
+        BarcodeScannerOptions options =
+                new BarcodeScannerOptions.Builder()
+                        .setBarcodeFormats(
+                                Barcode.FORMAT_QR_CODE,
+                                Barcode.FORMAT_CODE_39)
+                        .build();
+        //image = InputImage.fromBitmap(bitmap, 0);
+
+        BarcodeScanner scanner = BarcodeScanning.getClient();
+        Task<List<Barcode>> result = scanner.process(image)
+                .addOnSuccessListener(new OnSuccessListener<List<Barcode>>() {
+                    @Override
+                    public void onSuccess(List<Barcode> barcodes) {
+                        // Task completed successfully
+                        for (Barcode barcode: barcodes) {
+                            Rect bounds = barcode.getBoundingBox();
+                            Point[] corners = barcode.getCornerPoints();
+
+                            String rawValue = barcode.getRawValue();
+                            scannedText.setText(rawValue);
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Task failed with an exception
+                        // ...
+                    }
+                });
+
     }
 }

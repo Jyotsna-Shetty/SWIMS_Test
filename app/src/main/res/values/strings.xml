@@ -3,4 +3,5 @@
     <string name="TitleText">Smart Workshop Inventory Management System</string>
     <string name="CamBtn">Camera</string>
     <string name="Imageview">Image</string>
+    <string name="RawValue">TextView</string>
 </resources>
