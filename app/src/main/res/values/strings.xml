@@ -8,5 +8,6 @@
     <string name="EmailHint">Email</string>
     <string name="PasswordHint">Password</string>
     <string name="LoginBtn">Login</string>
+    <string name="Token">TextView</string>
 
 </resources>
