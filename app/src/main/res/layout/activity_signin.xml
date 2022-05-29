@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    android:background="@color/design_default_color_background"
+    tools:context=".SignInActivity">
+
 
     <TextView
         android:id="@+id/TestToken"
@@ -31,30 +33,36 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/EmailAddress"
+        android:id="@+id/EmailID"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="66dp"
+        android:autofillHints="Email"
+        android:cursorVisible="true"
         android:ems="10"
-        android:inputType="textEmailAddress"
         android:hint="@string/EmailHint"
+        android:inputType="textEmailAddress"
+        android:outlineProvider="paddedBounds"
+        android:textColor="@color/black"
+        android:textColorHint="#939393"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Title1"
-        android:autofillHints="Email" />
+        app:layout_constraintTop_toBottomOf="@+id/Title1" />
 
     <EditText
         android:id="@+id/TextPassword"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:autofillHints="Pass"
         android:ems="10"
-        android:inputType="textPassword"
         android:hint="@string/PasswordHint"
+        android:inputType="textPassword"
+        android:textColor="@color/black"
+        android:textColorHint="#939393"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EmailAddress"
-        android:autofillHints="Pass" />
+        app:layout_constraintTop_toBottomOf="@+id/EmailID" />
 
     <Button
         android:id="@+id/LoginButton"
