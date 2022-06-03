@@ -4,4 +4,10 @@
     <string name="CamBtn">Camera</string>
     <string name="Imageview">Image</string>
     <string name="RawValue">TextView</string>
+    <string name="LoginTitle">SWIMS Login</string>
+    <string name="EmailHint">Email</string>
+    <string name="PasswordHint">Password</string>
+    <string name="LoginBtn">Login</string>
+    <string name="Token">TextView</string>
+
 </resources>
