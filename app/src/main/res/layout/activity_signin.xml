@@ -34,15 +34,15 @@
 
     <EditText
         android:id="@+id/EmailID"
+        style="@style/Widget.AppCompat.EditText"
         android:layout_width="350dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="66dp"
         android:autofillHints="Email"
         android:cursorVisible="true"
         android:ems="10"
         android:hint="@string/EmailHint"
         android:inputType="textEmailAddress"
-        android:outlineProvider="paddedBounds"
         android:textColor="@color/black"
         android:textColorHint="#939393"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,7 +52,7 @@
     <EditText
         android:id="@+id/TextPassword"
         android:layout_width="350dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="32dp"
         android:autofillHints="Pass"
         android:ems="10"
@@ -69,11 +69,42 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="112dp"
         android:backgroundTint="#1F8DE4"
         android:text="@string/LoginBtn"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/TextPassword"
+        app:layout_constraintVertical_bias="0.503" />
+
+    <TextView
+        android:id="@+id/SignupText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="125dp"
+        android:text="@string/TextSignUp"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/TestToken"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LoginButton" />
+
+    <Button
+        android:id="@+id/SignupButton"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:layout_marginBottom="7dp"
+        android:text="@string/SignUpBtn"
+        android:textAllCaps="false"
+        android:textColor="#0277BD"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/TestToken"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LoginButton"
+        app:layout_constraintVertical_bias="0.563" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

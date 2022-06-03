@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SWIMS Test</string>
+    <string name="app_name">SWIMS</string>
     <string name="TitleText">Smart Workshop Inventory Management System</string>
     <string name="CamBtn">Camera</string>
     <string name="Imageview">Image</string>
@@ -9,5 +9,9 @@
     <string name="PasswordHint">Password</string>
     <string name="LoginBtn">Login</string>
     <string name="Token">TextView</string>
+    <string name="TextSignUp">to sign up</string>
+    <string name="SignUpBtn">Click here</string>
+    <string name="Title2">SWIMS Sign Up</string>
+    <string name="NameHint">Name</string>
 
 </resources>

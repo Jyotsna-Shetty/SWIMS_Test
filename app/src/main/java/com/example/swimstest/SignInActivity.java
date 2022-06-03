@@ -2,6 +2,7 @@ package com.example.swimstest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,7 +22,7 @@ import org.json.JSONObject;
 public class SignInActivity extends AppCompatActivity {
     EditText emailText;
     EditText passText;
-    Button loginBtn;
+    Button loginBtn, signupBtn;
     TextView tokenText;
     RequestQueue requestQueue;
 
@@ -33,10 +34,16 @@ public class SignInActivity extends AppCompatActivity {
         emailText = findViewById(R.id.EmailID);
         passText = findViewById(R.id.TextPassword);
         loginBtn = findViewById(R.id.LoginButton);
+        signupBtn = findViewById(R.id.SignupButton);
         tokenText = findViewById(R.id.TestToken);
 
         loginBtn.setOnClickListener(view -> {
             loginRequest();
+        });
+
+        signupBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
+            startActivity(intent);
         });
 
     }
