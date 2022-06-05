@@ -6,8 +6,9 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
+
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -40,6 +41,19 @@ public class SignInActivity extends AppCompatActivity {
         });
 
     }
+    public String trimMessage(String json, String key){
+        String trimmedString = null;
+
+        try{
+            JSONObject obj = new JSONObject(json);
+            trimmedString = obj.getString(key);
+        } catch(JSONException e){
+            e.printStackTrace();
+            return null;
+        }
+
+        return trimmedString;
+    }
 
     public void loginRequest() {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
@@ -56,15 +70,25 @@ public class SignInActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                tokenText.setText("String Response : "+ response.toString());
+                try {
+                    tokenText.setText("String Response : "+ response.getString("token"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+            }
             }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                tokenText.setText("Error getting response");
-            }
-        });
-        requestQueue.add(jsonObjectRequest);
+                String json = null;
 
-    }
-}
+                NetworkResponse response = error.networkResponse;
+                if(response != null && response.data != null) {
+                    json = new String(response.data);
+                    json = trimMessage(json, "error");
+                    if (json != null) tokenText.setText(json);
+                    }
+                }});
+                requestQueue.add(jsonObjectRequest);
+
+
+}}
