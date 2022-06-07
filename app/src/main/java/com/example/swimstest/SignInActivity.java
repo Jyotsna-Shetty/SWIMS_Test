@@ -3,9 +3,11 @@ package com.example.swimstest;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.android.volley.NetworkResponse;
@@ -25,6 +27,7 @@ public class SignInActivity extends AppCompatActivity {
     Button loginBtn;
     TextView tokenText;
     RequestQueue requestQueue;
+    String tokenAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +59,8 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void loginRequest() {
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        //RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue = RequestQueueSingleton.getInstance(this.getApplicationContext()).getRequestQueue();
         JSONObject object = new JSONObject();
         try {
             //input your API parameters
@@ -71,7 +75,9 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    tokenText.setText("String Response : "+ response.getString("token"));
+                    //tokenText.setText("String Response : "+ response.getString("token"));
+                    tokenAuth = response.getString("token");
+                    Log.d("TOKEN",tokenAuth);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -85,10 +91,10 @@ public class SignInActivity extends AppCompatActivity {
                 if(response != null && response.data != null) {
                     json = new String(response.data);
                     json = trimMessage(json, "error");
-                    if (json != null) tokenText.setText(json);
+                    //if (json != null) tokenText.setText(json);
+                    if (json != null) Toast.makeText(SignInActivity.this,json,Toast.LENGTH_SHORT).show();
                     }
                 }});
-                requestQueue.add(jsonObjectRequest);
-
-
-}}
+        requestQueue.add(jsonObjectRequest);
+    }
+}
