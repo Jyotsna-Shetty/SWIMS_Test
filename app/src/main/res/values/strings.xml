@@ -9,5 +9,7 @@
     <string name="PasswordHint">Password</string>
     <string name="LoginBtn">Login</string>
     <string name="Token">TextView</string>
+    <string name="getortake">GetorTake</string>
+    <string name="view">View</string>
 
 </resources>

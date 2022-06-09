@@ -2,6 +2,7 @@ package com.example.swimstest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +26,7 @@ public class SignInActivity extends AppCompatActivity {
     Button loginBtn;
     TextView tokenText;
     RequestQueue requestQueue;
+    public static String ACCESS_TOKEN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +73,10 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    tokenText.setText("String Response : "+ response.getString("token"));
+                    //tokenText.setText("String Response : "+ response.getString("token"));
+                    ACCESS_TOKEN = response.getString("token");
+                    Intent intent = new Intent(SignInActivity.this,MainmenuActivity.class);
+                    startActivity(intent);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
