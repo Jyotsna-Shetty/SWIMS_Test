@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.android.volley.NetworkResponse;
@@ -58,7 +60,8 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void loginRequest() {
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        //RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue = RequestQueueSingleton.getInstance(this.getApplicationContext()).getRequestQueue();
         JSONObject object = new JSONObject();
         try {
             //input your API parameters
@@ -90,10 +93,10 @@ public class SignInActivity extends AppCompatActivity {
                 if(response != null && response.data != null) {
                     json = new String(response.data);
                     json = trimMessage(json, "error");
-                    if (json != null) tokenText.setText(json);
+                    //if (json != null) tokenText.setText(json);
+                    if (json != null) Toast.makeText(SignInActivity.this,json,Toast.LENGTH_SHORT).show();
                     }
                 }});
-                requestQueue.add(jsonObjectRequest);
-
-
-}}
+        requestQueue.add(jsonObjectRequest);
+    }
+}
