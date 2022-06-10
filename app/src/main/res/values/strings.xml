@@ -10,8 +10,9 @@
     <string name="LoginBtn">Login</string>
     <string name="Token">TextView</string>
     <string name="TextSignUp">to sign up</string>
-    <string name="SignUpBtn">Click here</string>
+    <string name="SignUpPg">Click here</string>
     <string name="Title2">SWIMS Sign Up</string>
     <string name="NameHint">Name</string>
+    <string name="SignUpBtn">Sign Up</string>
 
 </resources>

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -17,7 +16,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,8 +23,8 @@ import org.json.JSONObject;
 public class SignInActivity extends AppCompatActivity {
     EditText emailText;
     EditText passText;
-    Button loginBtn, signupBtn;
-    TextView tokenText;
+    Button loginBtn, signupPgBtn;
+    //TextView tokenText;
     RequestQueue requestQueue;
     String tokenAuth;
 
@@ -35,17 +33,17 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
 
-        emailText = findViewById(R.id.EmailID);
-        passText = findViewById(R.id.TextPassword);
+        emailText = findViewById(R.id.EmailLogin);
+        passText = findViewById(R.id.PasswordLogin);
         loginBtn = findViewById(R.id.LoginButton);
-        signupBtn = findViewById(R.id.SignupButton);
-        tokenText = findViewById(R.id.TestToken);
+        signupPgBtn = findViewById(R.id.SignupPgButton);
+        //tokenText = findViewById(R.id.TestToken);
 
         loginBtn.setOnClickListener(view -> {
             loginRequest();
         });
 
-        signupBtn.setOnClickListener(view -> {
+        signupPgBtn.setOnClickListener(view -> {
             Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
             startActivity(intent);
         });
