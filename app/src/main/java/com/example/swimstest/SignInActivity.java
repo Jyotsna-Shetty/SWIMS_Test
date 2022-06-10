@@ -61,8 +61,8 @@ public class SignInActivity extends AppCompatActivity {
 
     public void loginRequest() {
         //RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        requestQueue = RequestQueueSingleton.getInstance(this.getApplicationContext()).getRequestQueue();
-        JSONObject object = new JSONObject();
+            requestQueue = RequestQueueSingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        JSONObject object = new JSONObject()    ;
         try {
             //input your API parameters
             object.put("email", emailText.getText().toString());

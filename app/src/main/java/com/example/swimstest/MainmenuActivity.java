@@ -14,9 +14,10 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,7 +35,6 @@ public class MainmenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mainmenu2);
         Get_take = findViewById(R.id.get_take);
         View = findViewById(R.id.view);
-
         Get_take.setOnClickListener(view -> startActivity(new Intent(MainmenuActivity.this,MainActivity.class)));
         View.setOnClickListener(view -> viewinfo());
     }
@@ -54,18 +54,17 @@ public class MainmenuActivity extends AppCompatActivity {
 
     public void viewinfo(){
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-        String url = "https://tools-management-dbms-project.herokuapp.com/api/tools/";
+        String url = "https://tools-management-dbms-project.herokuapp.com/api/tools";
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
 
                     @Override
-                    public void onResponse(JSONObject response) {
-                        //textView.setText("Response: " + response.toString());
-                        Toast.makeText(getApplicationContext(),"onResponse executed",Toast.LENGTH_LONG).show();
+                    public void onResponse(JSONArray response) {
 
                         Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_LONG).show();
-                        Log.d("RESPONSE",response.toString());
+                        Log.i("onResponse", response.toString());
                     }
                 }, new Response.ErrorListener() {
 
@@ -73,7 +72,7 @@ public class MainmenuActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
 
                         String json = null;
-
+                        Log.e("TAG", "Error " + error.getMessage());
                         NetworkResponse response = error.networkResponse;
                         if(response != null && response.data != null) {
                             json = new String(response.data);
@@ -84,17 +83,15 @@ public class MainmenuActivity extends AppCompatActivity {
                 })
         {
             @Override
-            public Map<String, String> getHeaders () throws AuthFailureError {
-            Map<String, String> params = new HashMap<String, String>();
-            params.put("Content-Type", "application/json; charset=UTF-8");
-            params.put("Authorization","bearer " + SignInActivity.ACCESS_TOKEN);
-            return params;
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                //headers.put("Content-Type", "application/json");
+                headers.put("Authorization","bearer "+SignInActivity.ACCESS_TOKEN );
+                return headers;
         }
 
         };
 
-// Access the RequestQueue through your singleton class.
-      //  RequestQueueSingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
         queue.add(jsonObjectRequest);
     }
 }
