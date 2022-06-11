@@ -33,7 +33,7 @@ public class MainmenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mainmenu2);
+        setContentView(R.layout.activity_mainmenu);
         takeBtn = findViewById(R.id.TakeButton);
         viewBtn = findViewById(R.id.ViewButton);
         toolsTaken = findViewById(R.id.ToolsText);

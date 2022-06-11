@@ -9,7 +9,7 @@
     <string name="PasswordHint">Password</string>
     <string name="LoginBtn">Login</string>
     <string name="Token">TextView</string>
-    <string name="getortake">Take Tool</string>
+    <string name="ScanToolText">Scan Tool</string>
     <string name="view">View Tools</string>
     <string name="ToolsTxt">View tools owned by user</string>
 

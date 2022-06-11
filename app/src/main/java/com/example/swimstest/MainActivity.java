@@ -48,8 +48,9 @@ public class MainActivity extends AppCompatActivity{
 
     public static final int CAMERA_PERM_CODE = 101;
     public static final int CAMERA_REQUEST_CODE = 102;  //camera request code
+    public String result;
     Button camBtn;
-    String currentPhotoPath;
+    String currentPhotoPath, rawValue;
     ImageView selectedImage;
     Bitmap bitmap;
     TextView scannedText;
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity{
             askCameraPermissions();
         });
     }
+
 
     //using checkSelfPermission method of ContextCompact checks whether permission is granted or not
     private void askCameraPermissions() {
@@ -111,7 +113,8 @@ public class MainActivity extends AppCompatActivity{
                 bitmap = BitmapFactory.decodeFile(currentPhotoPath);
                 selectedImage.setImageBitmap(bitmap);
                 InputImage image = InputImage.fromBitmap(bitmap, 0);
-                scanBarcodes(image);
+                result = scanBarcodes(image);
+                Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -155,7 +158,7 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-    private void scanBarcodes(InputImage image) {
+    private String scanBarcodes(InputImage image) {
         // [START set_detector_options]
         BarcodeScannerOptions options =
                 new BarcodeScannerOptions.Builder()
@@ -163,7 +166,7 @@ public class MainActivity extends AppCompatActivity{
                                 Barcode.FORMAT_QR_CODE,
                                 Barcode.FORMAT_CODE_39)
                         .build();
-        //image = InputImage.fromBitmap(bitmap, 0);
+        //String rawValue;
 
         BarcodeScanner scanner = BarcodeScanning.getClient();
         Task<List<Barcode>> result = scanner.process(image)
@@ -175,7 +178,7 @@ public class MainActivity extends AppCompatActivity{
                             Rect bounds = barcode.getBoundingBox();
                             Point[] corners = barcode.getCornerPoints();
 
-                            String rawValue = barcode.getRawValue();
+                            rawValue = barcode.getRawValue();
                             scannedText.setText(rawValue);
                         }
                     }
@@ -187,6 +190,6 @@ public class MainActivity extends AppCompatActivity{
                         // ...
                     }
                 });
-
+        return rawValue;
     }
 }
