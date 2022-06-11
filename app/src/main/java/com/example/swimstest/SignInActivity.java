@@ -38,7 +38,6 @@ public class SignInActivity extends AppCompatActivity {
         emailText = findViewById(R.id.EmailID);
         passText = findViewById(R.id.TextPassword);
         loginBtn = findViewById(R.id.LoginButton);
-        tokenText = findViewById(R.id.TestToken);
 
         loginBtn.setOnClickListener(view -> {
             loginRequest();

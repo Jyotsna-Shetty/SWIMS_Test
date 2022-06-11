@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -26,17 +27,18 @@ import java.util.Map;
 
 public class MainmenuActivity extends AppCompatActivity {
 
-    Button Get_take;
-    Button View;
+    Button takeBtn, viewBtn;
+    TextView toolsTaken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainmenu2);
-        Get_take = findViewById(R.id.get_take);
-        View = findViewById(R.id.view);
-        Get_take.setOnClickListener(view -> startActivity(new Intent(MainmenuActivity.this,MainActivity.class)));
-        View.setOnClickListener(view -> viewinfo());
+        takeBtn = findViewById(R.id.TakeButton);
+        viewBtn = findViewById(R.id.ViewButton);
+        toolsTaken = findViewById(R.id.ToolsText);
+        takeBtn.setOnClickListener(view -> startActivity(new Intent(MainmenuActivity.this,MainActivity.class)));
+        viewBtn.setOnClickListener(view -> viewinfo());
     }
 
     public String trimMessage(String json, String key){
@@ -63,8 +65,17 @@ public class MainmenuActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
 
-                        Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_LONG).show();
                         Log.i("onResponse", response.toString());
+                        try {
+                            JSONObject json = response.getJSONObject(0);
+                            //Toast.makeText(getApplicationContext(),json.getString("brand_name"),Toast.LENGTH_LONG).show();
+                            String toolsDisplay = json.getString("brand_name")+" "+json.getString("tooltype_name")+" "+
+                                    json.getString("subtype_name");
+                            toolsTaken.setText(toolsDisplay);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, new Response.ErrorListener() {
 
