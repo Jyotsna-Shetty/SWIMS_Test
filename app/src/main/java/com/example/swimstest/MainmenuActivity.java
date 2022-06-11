@@ -34,7 +34,7 @@ public class MainmenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainmenu);
-        takeBtn = findViewById(R.id.TakeButton);
+        takeBtn = findViewById(R.id.ScanButton);
         viewBtn = findViewById(R.id.ViewButton);
         toolsTaken = findViewById(R.id.ToolsText);
         takeBtn.setOnClickListener(view -> startActivity(new Intent(MainmenuActivity.this,MainActivity.class)));
@@ -54,6 +54,16 @@ public class MainmenuActivity extends AppCompatActivity {
         return trimmedString;
     }
 
+    public String extractTools(JSONArray jsonArray) throws JSONException {
+        String toolsDisplay = null;
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject json = jsonArray.getJSONObject(i);
+            toolsDisplay = json.getString("brand_name")+" "+json.getString("tooltype_name")+" "+
+                    json.getString("subtype_name")+"\n";
+        }
+        return toolsDisplay;
+    }
+
     public void viewinfo(){
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         String url = "https://tools-management-dbms-project.herokuapp.com/api/tools";
@@ -68,11 +78,7 @@ public class MainmenuActivity extends AppCompatActivity {
                         //Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_LONG).show();
                         Log.i("onResponse", response.toString());
                         try {
-                            JSONObject json = response.getJSONObject(0);
-                            //Toast.makeText(getApplicationContext(),json.getString("brand_name"),Toast.LENGTH_LONG).show();
-                            String toolsDisplay = json.getString("brand_name")+" "+json.getString("tooltype_name")+" "+
-                                    json.getString("subtype_name");
-                            toolsTaken.setText(toolsDisplay);
+                            toolsTaken.setText(extractTools(response));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

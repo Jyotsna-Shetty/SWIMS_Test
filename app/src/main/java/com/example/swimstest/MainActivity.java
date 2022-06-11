@@ -25,10 +25,18 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -38,22 +46,29 @@ import com.google.mlkit.vision.barcode.BarcodeScanning;
 import com.google.mlkit.vision.barcode.common.Barcode;
 import com.google.mlkit.vision.common.InputImage;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity{
 
     public static final int CAMERA_PERM_CODE = 101;
     public static final int CAMERA_REQUEST_CODE = 102;  //camera request code
     public String result;
-    Button camBtn;
+    Button camBtn, takeBtn, returnBtn;
     String currentPhotoPath, rawValue;
     ImageView selectedImage;
     Bitmap bitmap;
     TextView scannedText;
+    EditText statusText, remarksText;
+    RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,12 +77,16 @@ public class MainActivity extends AppCompatActivity{
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);  //fixes orientation to PORTRAIT mode
 
         camBtn =findViewById(R.id.CameraButton);
+        takeBtn =findViewById(R.id.TakeButton);
+        returnBtn =findViewById(R.id.ReturnButton);
         selectedImage = findViewById(R.id.ImageView);
         scannedText = findViewById(R.id.ScannedText);
+        statusText = findViewById(R.id.StatusEditText);
+        remarksText = findViewById(R.id.RemarksEditText);
 
-        camBtn.setOnClickListener(view -> {
-            askCameraPermissions();
-        });
+        camBtn.setOnClickListener(view -> askCameraPermissions());
+        takeBtn.setOnClickListener(view -> takeRequest());
+        returnBtn.setOnClickListener(view -> returnRequest());
     }
 
 
@@ -113,8 +132,12 @@ public class MainActivity extends AppCompatActivity{
                 bitmap = BitmapFactory.decodeFile(currentPhotoPath);
                 selectedImage.setImageBitmap(bitmap);
                 InputImage image = InputImage.fromBitmap(bitmap, 0);
-                result = scanBarcodes(image);
-                Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
+                try {
+                    result = scanBarcodes(image);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                //Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -160,6 +183,7 @@ public class MainActivity extends AppCompatActivity{
 
     private String scanBarcodes(InputImage image) {
         // [START set_detector_options]
+        Log.d("BARCODE","Function executed");
         BarcodeScannerOptions options =
                 new BarcodeScannerOptions.Builder()
                         .setBarcodeFormats(
@@ -174,6 +198,7 @@ public class MainActivity extends AppCompatActivity{
                     @Override
                     public void onSuccess(List<Barcode> barcodes) {
                         // Task completed successfully
+                        Log.d("BARCODE","Inner Function executed");
                         for (Barcode barcode: barcodes) {
                             Rect bounds = barcode.getBoundingBox();
                             Point[] corners = barcode.getCornerPoints();
@@ -186,10 +211,112 @@ public class MainActivity extends AppCompatActivity{
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        e.printStackTrace();
                         // Task failed with an exception
                         // ...
                     }
                 });
         return rawValue;
+    }
+
+    public String trimMessage(String json, String key){
+        String trimmedString = null;
+
+        try{
+            JSONObject obj = new JSONObject(json);
+            trimmedString = obj.getString(key);
+        } catch(JSONException e){
+            e.printStackTrace();
+            return null;
+        }
+
+        return trimmedString;
+    }
+
+    public void takeRequest() {
+        requestQueue = RequestQueueSingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        JSONObject object = new JSONObject();
+        try {
+            //input your API parameters
+            Log.d("RESULT",result);
+            object.put("encryption_code", result);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String url = "https://tools-management-dbms-project.herokuapp.com/api/tools/take";
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, object,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Toast.makeText(MainActivity.this, "Tool Taken successfully", Toast.LENGTH_SHORT).show();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                String json = null;
+
+                NetworkResponse response = error.networkResponse;
+                if (response != null && response.data != null) {
+                    json = new String(response.data);
+                    json = trimMessage(json, "error");
+                    if (json != null)
+                        Toast.makeText(MainActivity.this, json, Toast.LENGTH_SHORT).show();
+                }
+            }
+        })
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                //headers.put("Content-Type", "application/json");
+                headers.put("Authorization", "bearer " + SignInActivity.ACCESS_TOKEN);
+                return headers;
+            }
+        };
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    public void returnRequest() {
+        requestQueue = RequestQueueSingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        JSONObject object = new JSONObject()    ;
+        try {
+            //input your API parameters
+            object.put("encryption_code", result);
+            object.put("status", statusText.getText().toString());
+            object.put("remarks", remarksText.getText().toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String url = "https://tools-management-dbms-project.herokuapp.com/api/tools/take";
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, object,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Toast.makeText(MainActivity.this,"Tool returned successfully", Toast.LENGTH_SHORT).show();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                String json = null;
+
+                NetworkResponse response = error.networkResponse;
+                if (response != null && response.data != null) {
+                    json = new String(response.data);
+                    json = trimMessage(json, "error");
+                    if (json != null)
+                        Toast.makeText(MainActivity.this, json, Toast.LENGTH_SHORT).show();
+                }
+            }
+        })
+            {
+                @Override
+                public Map<String, String> getHeaders () throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<>();
+                //headers.put("Content-Type", "application/json");
+                headers.put("Authorization", "bearer " + SignInActivity.ACCESS_TOKEN);
+                return headers;
+                }
+            };
+        requestQueue.add(jsonObjectRequest);
     }
 }
