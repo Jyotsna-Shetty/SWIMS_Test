@@ -4,11 +4,18 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/AndroidStudioProjects/SWIMSTest/app/src/main/res/layout/activity_login.xml" value="0.20677083333333332" />
-        <entry key="..\:/AndroidStudioProjects/SWIMSTest/app/src/main/res/layout/activity_main.xml" value="0.2364179037174423" />
+        <entry key="..\:/AndroidStudioProjects/SWIMSTest/app/src/main/res/layout/activity_main.xml" value="0.17910447251321387" />
+        <entry key="..\:/AndroidStudioProjects/SWIMSTest/app/src/main/res/layout/activity_mainmenu.xml" value="0.20677083333333332" />
+        <entry key="..\:/AndroidStudioProjects/SWIMSTest/app/src/main/res/layout/activity_mainmenu2.xml" value="0.20677083333333332" />
         <entry key="..\:/AndroidStudioProjects/SWIMSTest/app/src/main/res/layout/activity_sign_in.xml" value="0.20677083333333332" />
         <entry key="..\:/AndroidStudioProjects/SWIMSTest/app/src/main/res/layout/activity_sign_up.xml" value="0.20677083333333332" />
         <entry key="..\:/AndroidStudioProjects/SWIMSTest/app/src/main/res/layout/activity_signin.xml" value="0.20677083333333332" />
         <entry key="..\:/AndroidStudioProjects/SWIMSTest/app/src/main/res/xml/file_paths.xml" value="0.20677083333333332" />
+        <entry key="..\:/Users/Ashwin Kumar/AndroidStudioProjects/SWIMS_Test/app/src/main/res/layout/activity_main.xml" value="0.265625" />
+        <entry key="..\:/Users/Ashwin Kumar/AndroidStudioProjects/SWIMS_Test/app/src/main/res/layout/activity_mainmenu.xml" value="0.265625" />
+        <entry key="..\:/Users/Ashwin Kumar/AndroidStudioProjects/SWIMS_Test/app/src/main/res/layout/activity_mainmenu2.xml" value="0.265625" />
+        <entry key="..\:/Users/Ashwin Kumar/AndroidStudioProjects/SWIMS_Test/app/src/main/res/layout/activity_signin.xml" value="0.265625" />
+        <entry key="..\:/Users/Ashwin Kumar/AndroidStudioProjects/SWIMS_Test/app/src/main/res/layout/get_tools.xml" value="0.265625" />
       </map>
     </option>
   </component>
