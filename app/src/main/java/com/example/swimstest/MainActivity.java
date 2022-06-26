@@ -134,10 +134,10 @@ public class MainActivity extends AppCompatActivity{
                 InputImage image = InputImage.fromBitmap(bitmap, 0);
                 try {
                     result = scanBarcodes(image);
+                    Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                //Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -205,6 +205,7 @@ public class MainActivity extends AppCompatActivity{
 
                             rawValue = barcode.getRawValue();
                             scannedText.setText(rawValue);
+                            Log.d("BARCODE",rawValue);
                         }
                     }
                 })
@@ -212,8 +213,8 @@ public class MainActivity extends AppCompatActivity{
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         e.printStackTrace();
-                        // Task failed with an exception
-                        // ...
+                        Toast.makeText(getApplicationContext(), "Barcode scanning fail",Toast.LENGTH_SHORT).show();
+                        Log.d("BARCODE","Inner Function not executed");
                     }
                 });
         return rawValue;
@@ -239,7 +240,7 @@ public class MainActivity extends AppCompatActivity{
         try {
             //input your API parameters
             Log.d("RESULT",result);
-            object.put("encryption_code", result);
+            object.put("encryption_code", rawValue);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -278,21 +279,23 @@ public class MainActivity extends AppCompatActivity{
 
     public void returnRequest() {
         requestQueue = RequestQueueSingleton.getInstance(this.getApplicationContext()).getRequestQueue();
-        JSONObject object = new JSONObject()    ;
+        JSONObject object = new JSONObject();
+        //Log.d("BARCODE",result);
         try {
             //input your API parameters
-            object.put("encryption_code", result);
+            object.put("encryption_code", rawValue);
             object.put("status", statusText.getText().toString());
             object.put("remarks", remarksText.getText().toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        String url = "https://tools-management-dbms-project.herokuapp.com/api/tools/take";
+        String url = "https://tools-management-dbms-project.herokuapp.com/api/tools/return";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, object,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Toast.makeText(MainActivity.this,"Tool returned successfully", Toast.LENGTH_SHORT).show();
+                        Log.d("Return","done");
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -305,6 +308,8 @@ public class MainActivity extends AppCompatActivity{
                     json = trimMessage(json, "error");
                     if (json != null)
                         Toast.makeText(MainActivity.this, json, Toast.LENGTH_SHORT).show();
+                    Log.d("Return","error");
+                    Log.d("Return",json);
                 }
             }
         })
