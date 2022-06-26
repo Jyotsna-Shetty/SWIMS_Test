@@ -26,7 +26,7 @@ public class SignInActivity extends AppCompatActivity {
     Button loginBtn, signupPgBtn;
     //TextView tokenText;
     RequestQueue requestQueue;
-    String tokenAuth;
+    public static String ACCESS_TOKEN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class SignInActivity extends AppCompatActivity {
         passText = findViewById(R.id.PasswordLogin);
         loginBtn = findViewById(R.id.LoginButton);
         signupPgBtn = findViewById(R.id.SignupPgButton);
-        //tokenText = findViewById(R.id.TestToken);
+
 
         loginBtn.setOnClickListener(view -> {
             loginRequest();
@@ -64,9 +64,8 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void loginRequest() {
-        //RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue = RequestQueueSingleton.getInstance(this.getApplicationContext()).getRequestQueue();
-        JSONObject object = new JSONObject();
+        JSONObject object = new JSONObject()    ;
         try {
             //input your API parameters
             object.put("email", emailText.getText().toString());
@@ -80,9 +79,10 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    //tokenText.setText("String Response : "+ response.getString("token"));
-                    tokenAuth = response.getString("token");
-                    Log.d("TOKEN",tokenAuth);
+                    ACCESS_TOKEN = response.getString("token");
+                    Toast.makeText(SignInActivity.this, "Login succesful", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(SignInActivity.this,MainmenuActivity.class);
+                    startActivity(intent);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
