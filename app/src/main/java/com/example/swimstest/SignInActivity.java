@@ -59,7 +59,6 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void loginRequest() {
-        //RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue = RequestQueueSingleton.getInstance(this.getApplicationContext()).getRequestQueue();
         JSONObject object = new JSONObject()    ;
         try {
@@ -75,8 +74,8 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    //tokenText.setText("String Response : "+ response.getString("token"));
                     ACCESS_TOKEN = response.getString("token");
+                    Toast.makeText(SignInActivity.this, "Login succesful", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(SignInActivity.this,MainmenuActivity.class);
                     startActivity(intent);
                 } catch (JSONException e) {

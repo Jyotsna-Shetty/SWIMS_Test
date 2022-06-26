@@ -3,6 +3,7 @@ package com.example.swimstest;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -38,7 +39,7 @@ public class MainmenuActivity extends AppCompatActivity {
         viewBtn = findViewById(R.id.ViewButton);
         toolsTaken = findViewById(R.id.ToolsText);
         takeBtn.setOnClickListener(view -> startActivity(new Intent(MainmenuActivity.this,MainActivity.class)));
-        viewBtn.setOnClickListener(view -> viewinfo());
+        viewBtn.setOnClickListener(view -> viewInfo());
     }
 
     public String trimMessage(String json, String key){
@@ -65,20 +66,20 @@ public class MainmenuActivity extends AppCompatActivity {
         else return toolsDisplay;
     }
 
-    public void viewinfo(){
+    public void viewInfo(){
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         String url = "https://tools-management-dbms-project.herokuapp.com/api/tools";
 
 
         JsonArrayRequest jsonObjectRequest = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-
                     @Override
                     public void onResponse(JSONArray response) {
 
-                        //Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_LONG).show();
                         Log.i("onResponse", response.toString());
                         try {
+                            toolsTaken.setTextColor(Color.parseColor("#000000"));
+                            toolsTaken.setTextSize(16);
                             toolsTaken.setText(extractTools(response));
                         } catch (JSONException e) {
                             e.printStackTrace();
