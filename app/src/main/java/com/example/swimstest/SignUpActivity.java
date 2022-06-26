@@ -24,6 +24,7 @@ public class SignUpActivity extends AppCompatActivity {
     EditText nameText,emailText, passText;
     Button signUpBtn;
     RequestQueue requestQueue;
+    int flag;
 
 
     @Override
@@ -58,7 +59,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void signUpRequest() {
         requestQueue = RequestQueueSingleton.getInstance(this.getApplicationContext()).getRequestQueue();
-        final int[] flag = {0};
+        //flag = 0;
         JSONObject object = new JSONObject();
         try {
             //input your API parameters
@@ -79,7 +80,6 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 String json = null;
-                flag[0] = 1;
                 NetworkResponse response = error.networkResponse;
                 if(response != null && response.data != null) {
                     json = new String(response.data);
@@ -87,9 +87,6 @@ public class SignUpActivity extends AppCompatActivity {
                     if (json != null) Toast.makeText(SignUpActivity.this,json,Toast.LENGTH_SHORT).show();
                 }
             }});
-        if (Arrays.equals(flag, new int[]{0})) {
-            Toast.makeText(SignUpActivity.this,"New account created",Toast.LENGTH_LONG).show();
-        }
         requestQueue.add(jsonObjectRequest);
     }
 }

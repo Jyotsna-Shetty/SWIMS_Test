@@ -15,6 +15,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -204,6 +205,7 @@ public class MainActivity extends AppCompatActivity{
                             Point[] corners = barcode.getCornerPoints();
 
                             rawValue = barcode.getRawValue();
+                            scannedText.setTextColor(Color.parseColor("#000000"));
                             scannedText.setText(rawValue);
                             Log.d("BARCODE",rawValue);
                         }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/design_default_color_background"
+    android:background="#8AC6C0"
     tools:context=".SignInActivity">
 
 
@@ -13,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
+        android:fontFamily="@font/alata"
         android:text="@string/LoginTitle"
         android:textColor="@color/black"
         android:textSize="24sp"
@@ -57,11 +58,11 @@
 
     <Button
         android:id="@+id/LoginButton"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="112dp"
         android:backgroundTint="#1F8DE4"
+        android:fontFamily="sans-serif-medium"
         android:text="@string/LoginBtn"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
