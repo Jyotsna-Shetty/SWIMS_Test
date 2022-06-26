@@ -55,13 +55,14 @@ public class MainmenuActivity extends AppCompatActivity {
     }
 
     public String extractTools(JSONArray jsonArray) throws JSONException {
-        String toolsDisplay = null;
+        String toolsDisplay = "";
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject json = jsonArray.getJSONObject(i);
-            toolsDisplay = json.getString("brand_name")+" "+json.getString("tooltype_name")+" "+
+            toolsDisplay = toolsDisplay + json.getString("brand_name")+" "+json.getString("tooltype_name")+" "+
                     json.getString("subtype_name")+"\n";
         }
-        return toolsDisplay;
+        if (toolsDisplay.equals("")) return "None";
+        else return toolsDisplay;
     }
 
     public void viewinfo(){

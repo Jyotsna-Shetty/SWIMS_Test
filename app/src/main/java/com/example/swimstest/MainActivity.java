@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity{
                 InputImage image = InputImage.fromBitmap(bitmap, 0);
                 try {
                     result = scanBarcodes(image);
-                    Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this,result,Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -239,7 +239,6 @@ public class MainActivity extends AppCompatActivity{
         JSONObject object = new JSONObject();
         try {
             //input your API parameters
-            Log.d("RESULT",result);
             object.put("encryption_code", rawValue);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -249,7 +248,7 @@ public class MainActivity extends AppCompatActivity{
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Toast.makeText(MainActivity.this, "Tool Taken successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Tool taken successfully", Toast.LENGTH_SHORT).show();
                     }
                 }, new Response.ErrorListener() {
             @Override
