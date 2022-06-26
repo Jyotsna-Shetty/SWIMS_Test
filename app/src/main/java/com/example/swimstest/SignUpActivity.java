@@ -18,6 +18,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Arrays;
+
 public class SignUpActivity extends AppCompatActivity {
     EditText nameText,emailText, passText;
     Button signUpBtn;
@@ -56,6 +58,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void signUpRequest() {
         requestQueue = RequestQueueSingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        final int[] flag = {0};
         JSONObject object = new JSONObject();
         try {
             //input your API parameters
@@ -70,22 +73,23 @@ public class SignUpActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Toast.makeText(SignUpActivity.this,"New account created",Toast.LENGTH_LONG).show();
+
                     }
                 },new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 String json = null;
-
+                flag[0] = 1;
                 NetworkResponse response = error.networkResponse;
                 if(response != null && response.data != null) {
                     json = new String(response.data);
                     json = trimMessage(json, "error");
-                    //if (json != null) tokenText.setText(json);
                     if (json != null) Toast.makeText(SignUpActivity.this,json,Toast.LENGTH_SHORT).show();
                 }
             }});
-
+        if (Arrays.equals(flag, new int[]{0})) {
+            Toast.makeText(SignUpActivity.this,"New account created",Toast.LENGTH_LONG).show();
+        }
         requestQueue.add(jsonObjectRequest);
     }
 }

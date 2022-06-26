@@ -86,7 +86,7 @@
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
+        android:layout_marginStart="93dp"
         android:text="@string/SignUpPg"
         android:textAllCaps="false"
         android:textColor="#0277BD"
