@@ -23,7 +23,6 @@
 
     <Button
         android:id="@+id/CameraButton"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="300dp"
@@ -44,18 +43,90 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Title"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
+        app:srcCompat="@drawable/ic_launcher_foreground"
+        tools:ignore="ImageContrastCheck" />
 
     <TextView
         android:id="@+id/ScannedText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
         android:text="@string/RawValue"
-        android:textColor="@color/black"
+        android:textColor="#656565"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/CameraButton" />
+
+    <Button
+        android:id="@+id/TakeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="135dp"
+        android:backgroundTint="#1F8DE4"
+        android:text="@string/TakeBtn"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ScannedText" />
+
+    <Button
+        android:id="@+id/ReturnButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="135dp"
+        android:backgroundTint="#1F8DE4"
+        android:text="@string/ReturnBtn"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ScannedText" />
+
+    <EditText
+        android:id="@+id/StatusEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="110dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/StatusHint"
+        android:textColor="@color/black"
+        android:textColorHint="#939393"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ScannedText"
+        tools:ignore="TouchTargetSizeCheck"
+        android:autofillHints="stat" />
+
+    <EditText
+        android:id="@+id/RemarksEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="@string/RemarksHint"
+        android:textColor="@color/black"
+        android:textColorHint="#939393"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TouchTargetSizeCheck"
+        android:autofillHints="rem" />
+
+    <TextView
+        android:id="@+id/RetutnText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:text="@string/ReturnText"
+        android:textColor="#656565"
+        app:layout_constraintBottom_toTopOf="@+id/StatusEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ScannedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

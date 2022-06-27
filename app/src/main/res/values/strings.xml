@@ -1,13 +1,26 @@
 <resources>
-    <string name="app_name">SWIMS Test</string>
+    <string name="app_name">SWIMS</string>
     <string name="TitleText">Smart Workshop Inventory Management System</string>
     <string name="CamBtn">Camera</string>
     <string name="Imageview">Image</string>
-    <string name="RawValue">TextView</string>
+    <string name="RawValue">Encryption code</string>
     <string name="LoginTitle">SWIMS Login</string>
     <string name="EmailHint">Email</string>
     <string name="PasswordHint">Password</string>
     <string name="LoginBtn">Login</string>
     <string name="Token">TextView</string>
+    <string name="TextSignUp">to sign up</string>
+    <string name="SignUpPg">Click here</string>
+    <string name="Title2">SWIMS Sign Up</string>
+    <string name="NameHint">Name</string>
+    <string name="SignUpBtn">Sign Up</string>
+    <string name="ScanToolText">Scan Tool</string>
+    <string name="view">View Tools</string>
+    <string name="ToolsTxt">View tools owned by user</string>
+    <string name="TakeBtn">Take Tool</string>
+    <string name="ReturnBtn">Return Tool</string>
+    <string name="StatusHint">Status</string>
+    <string name="RemarksHint">Remarks about tool</string>
+    <string name="ReturnText">To return a tool, enter status and remarks</string>
 
 </resources>
